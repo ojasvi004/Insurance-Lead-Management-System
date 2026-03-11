@@ -36,6 +36,8 @@ public class MainApplication {
 				deleteLeadRecord(sc);
 			}else if (choice.equals("4")) {
 				showLeadDetails(sc);
+			}else if (choice.equals("5")) {
+				showAllLeadDetails(sc);
 			} else {
 				System.out.println("Invalid option.");
 			}
@@ -271,6 +273,45 @@ public class MainApplication {
 			}
 		} else {
 			System.out.println("No contacts found");
+		}
+	}
+	
+	static void showAllLeadDetails(Scanner sc) {
+		List<DataObjects.LeadDO> allLeads = new ArrayList<>(DataObjects.DataSource.partyData.values());
+		if (allLeads.size() == 0) {
+			System.out.println("No leads found.");
+			return;
+		}
+		for (int i = 0; i < allLeads.size(); i++) {
+			DataObjects.LeadDO lead = allLeads.get(i);
+			System.out.println("Lead ID: " + lead.getLeadSeq());
+			System.out.println("Name: " + lead.getTitle() + " " + lead.getFirstName());
+			if (lead.getBirthDate() != null) {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				System.out.println("Date of Birth: " + sdf.format(lead.getBirthDate()));
+			}
+			System.out.println("Gender: " + lead.getGenderCd());
+			
+			System.out.println("Addresses");
+			List<DataObjects.LeadAddressDO> addresses = lead.getLeadAddressDOList();
+			if (addresses.size() > 0) {
+				for (int j=0; j < addresses.size();j++) {
+					DataObjects.LeadAddressDO addr = addresses.get(j);
+					System.out.println((i + 1) + ": " +addr.getAddressType() + " - " + addr.getPinCode());
+				}
+			} else {
+				System.out.println("No addresses found");
+			}
+			System.out.println("Contacts");
+			List<DataObjects.LeadContactDO> contacts = lead.getLeadContactDOList();
+			if (contacts.size() > 0) {
+				for (int k= 0; k <contacts.size(); k++) {
+					DataObjects.LeadContactDO contact = contacts.get(k);
+					System.out.println((i+1)+": "+contact.getContactType() + " - "+contact.getContactNum());
+				}
+			} else {
+				System.out.println("No contacts found");
+			}
 		}
 	}
 }
