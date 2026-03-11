@@ -44,7 +44,7 @@ public class MainApplication {
 		}
 		sc.close();
 	}
-
+	
 	static void registerNewLead(Scanner sc) {
 		System.out.println("Register new lead");
 		DataObjects.LeadDO newLead = new DataObjects.LeadDO();
@@ -76,10 +76,62 @@ public class MainApplication {
 
 		newLead.setLeadAddressDOList(captureUserAddresses(newLeadId, sc));
 		newLead.setLeadContactDOList(captureUserContacts(newLeadId, sc));
+		newLead.setFNAQuestionResponseDOList(captureFNAQuestions(sc));
 		DataObjects.DataSource.partyData.put(newLeadId, newLead);
 		System.out.println("Success! Lead registered with ID: " + newLeadId);
+		
 	}
 
+	static List<DataObjects.FNAQuestionResponseDO> captureFNAQuestions(Scanner sc) {
+		List<DataObjects.FNAQuestionResponseDO> fnaList = new ArrayList<>();
+		DataObjects.FNAQuestionResponseDO q1 = new DataObjects.FNAQuestionResponseDO();
+		q1.setQuestiondesc("Are you looking for the security during retirement ?");
+		System.out.print(q1.getQuestiondesc() + " (YES/NO): ");
+		q1.setResponseValue(sc.nextLine());
+		fnaList.add(q1);
+		
+		DataObjects.FNAQuestionResponseDO q2 = new DataObjects.FNAQuestionResponseDO();
+		q2.setQuestiondesc("Are you saving for specific goal like children education or marriage or any other specific goal like buying car, world tour?");
+		System.out.print(q2.getQuestiondesc() + " (YES/NO): ");
+		q2.setResponseValue(sc.nextLine());
+		fnaList.add(q2);
+		
+		DataObjects.FNAQuestionResponseDO q3 = new DataObjects.FNAQuestionResponseDO();
+		q3.setQuestiondesc("Do you want to make lumpsum investment ?");
+		System.out.print(q3.getQuestiondesc() + " (YES/NO): ");
+		q3.setResponseValue(sc.nextLine());
+		fnaList.add(q3);
+		
+		DataObjects.FNAQuestionResponseDO q4 = new DataObjects.FNAQuestionResponseDO();
+		q4.setQuestiondesc("Do you want to protect your family from financial impact of sudden event of death , disability , critical illness etc ?");
+		System.out.print(q4.getQuestiondesc() + " (YES/NO): ");
+		q4.setResponseValue(sc.nextLine());
+		fnaList.add(q4);
+		
+		DataObjects.FNAQuestionResponseDO q5 = new DataObjects.FNAQuestionResponseDO();
+		q5.setQuestiondesc("Do you want to protect your family from financial impact of sudden event of medical issues, healthcare expenses , critical illness etc ?");
+		System.out.print(q5.getQuestiondesc() + " (YES/NO): ");
+		q5.setResponseValue(sc.nextLine());
+		fnaList.add(q5);
+		
+		DataObjects.FNAQuestionResponseDO q6 = new DataObjects.FNAQuestionResponseDO();
+		q6.setQuestiondesc("Whats your average monthly income?");
+		System.out.println(q6.getQuestiondesc());
+		System.out.println("Options: Below 5 lacs | Between 5 to 10 lacs | Between 10 to 15 lacs | Above 15 lacs");
+		System.out.print("Enter response: ");
+		q6.setResponseValue(sc.nextLine());
+		fnaList.add(q6);
+		
+		DataObjects.FNAQuestionResponseDO q7 = new DataObjects.FNAQuestionResponseDO();
+		q7.setQuestiondesc("when are you planning to retire ?");
+		System.out.println(q7.getQuestiondesc());
+		System.out.println("Options: 45 | 50 | 55 | 60 | 60+");
+		System.out.print("Enter response: ");
+		q7.setResponseValue(sc.nextLine());
+		fnaList.add(q7);
+		return fnaList;
+	}
+	
 	static List<DataObjects.LeadAddressDO> captureUserAddresses(String leadSeq, Scanner sc) {
 		List<DataObjects.LeadAddressDO> addresses = new ArrayList<>();
 
