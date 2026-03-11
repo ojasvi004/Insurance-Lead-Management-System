@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import DataObjects.FNAQuestionResponseDO;
+
 public class MainApplication {
 	Scanner sc = new Scanner(System.in);
 
@@ -197,6 +199,7 @@ public class MainApplication {
 		System.out.println("4: Edit gender");
 		System.out.println("5: Update addresses");
 		System.out.println("6: Update contacts");
+		System.out.println("7: Update FNA Response");
 		System.out.print("Please select an option: ");
 		String choice = sc.nextLine();
 
@@ -274,7 +277,28 @@ public class MainApplication {
                 System.out.println("Contact updated");
 			}
 			System.out.println("Invalid option");
-		} else {
+		}else if(choice.equals("7")) {
+			List<DataObjects.FNAQuestionResponseDO> fnaList = leadToEdit.getFNAQuestionResponseDOList();
+			if(fnaList.size() == 0) {
+				System.out.println("No FNA responses found");
+			} else {
+				for(int i = 0; i<fnaList.size(); i++) {
+					System.out.println((i + 1) + ": " + fnaList.get(i).getQuestiondesc());
+					System.out.println("Current value: " + fnaList.get(i).getResponseValue());
+				}
+				System.out.println("Select the question you want to edit:");
+				int ind = Integer.parseInt(sc.nextLine()) -1;
+				if(ind < fnaList.size()) {
+					DataObjects.FNAQuestionResponseDO fnaToEdit = fnaList.get(ind);
+					System.out.println("Question: " + fnaToEdit.getQuestiondesc());
+					System.out.print("Enter new response: ");
+					fnaToEdit.setResponseValue(sc.nextLine());
+					System.out.println("FNA response updated");
+				} else {
+					System.out.println("Invalid selection");
+				}
+			}
+		}else {
 			System.out.println("Invalid option");
 		}
 		DataObjects.DataSource.partyData.put(leadSeq, leadToEdit);
@@ -323,6 +347,14 @@ public class MainApplication {
 				DataObjects.LeadContactDO contact = contacts.get(i);
 				System.out.println((i+1)+": "+contact.getContactType() + " - "+contact.getContactNum());
 			}
+		System.out.println("FNA Responses");
+		List<DataObjects.FNAQuestionResponseDO> fnaList = leadInfo.getFNAQuestionResponseDOList();
+		if(fnaList.size()>0) {
+			for(int i =0;i<fnaList.size(); i++) {
+				System.out.println("Question:" + fnaList.get(i).getQuestiondesc());
+				System.out.println("Answer: " + fnaList.get(i).getResponseValue());
+			}
+		}
 		} else {
 			System.out.println("No contacts found");
 		}
@@ -360,6 +392,14 @@ public class MainApplication {
 				for (int k= 0; k <contacts.size(); k++) {
 					DataObjects.LeadContactDO contact = contacts.get(k);
 					System.out.println((i+1)+": "+contact.getContactType() + " - "+contact.getContactNum());
+				}
+				System.out.println("FNA Responses");
+				List<DataObjects.FNAQuestionResponseDO> fnaList = lead.getFNAQuestionResponseDOList();
+				if(fnaList.size()>0) {
+					for(int j =0;j<fnaList.size(); j++) {
+						System.out.println("Question:" + fnaList.get(j).getQuestiondesc());
+						System.out.println("Answer: " + fnaList.get(j).getResponseValue());
+					}
 				}
 			} else {
 				System.out.println("No contacts found");
