@@ -170,7 +170,7 @@ public class MainApplication {
 			System.out.println("Gender updated");
 		} else if (choice.equals("5")) {
 			List<DataObjects.LeadAddressDO> addressList = leadToEdit.getLeadAddressDOList();
-			if(addressList == null || addressList.size() == 0) {
+			if(addressList.size() == 0) {
 				System.out.println("No address found.");
 			}
 			else {
@@ -198,8 +198,26 @@ public class MainApplication {
                 }
 			}			
 		} else if (choice.equals("6")) {
+			List<DataObjects.LeadContactDO> contactList = leadToEdit.getLeadContactDOList();
+			if(contactList.size() == 0) {
+				System.out.println("No contacts found");	
+			}
+			for(int i = 0;i<contactList.size(); i++) {
+				System.out.println((i+1)+": "+contactList.get(i).getContactType() + " - "+contactList.get(i).getContactNum());
+			}
+			System.out.println("Selcet the contact you want to edit");
+			int ind = Integer.parseInt(sc.nextLine())-1;
+			if(ind >=0 && ind<contactList.size()) {
+				DataObjects.LeadContactDO contactToEdit = contactList.get(ind);
+				System.out.print("Contact Type (EMAIL/PHONE): ");
+                contactToEdit.setContactType(sc.nextLine());
+                System.out.print("Enter Contact Details: ");
+                contactToEdit.setContactNum(sc.nextLine());
+                System.out.println("Contact updated");
+			}
+			System.out.println("Invalid option");
 		} else {
-			System.out.println("Invalid option.");
+			System.out.println("Invalid option");
 		}
 		DataObjects.DataSource.partyData.put(leadSeq, leadToEdit);
 	}
