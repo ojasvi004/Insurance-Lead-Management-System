@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -50,7 +51,7 @@ public class MainApplication {
 	static void registerNewLead(Scanner sc) {
 		System.out.println("Register new lead");
 		DataObjects.LeadDO newLead = new DataObjects.LeadDO();
-		String newLeadId = String.valueOf(DataObjects.DataSource.partyData.size() + 1);
+		String newLeadId = Operations.SequenceGenerator.getInstance().getNextSequence();
 		newLead.setLeadSeq(newLeadId);
 		String newTitle = getValidString(sc, "Enter Title(Mr/Ms/Mrs): ");
 		newLead.setTitle(newTitle);
@@ -61,7 +62,7 @@ public class MainApplication {
 		while (!validDate) {
 			String dobInput = getValidString(sc, "Enter date of birth (dd/mm/yyyy): ");
 			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 				sdf.setLenient(false);
 				Date dob = sdf.parse(dobInput);
 				newLead.setBirthDate(dob);
@@ -79,51 +80,69 @@ public class MainApplication {
 		System.out.println("Success! Lead registered with ID: " + newLeadId);
 	}
 
-	static List<DataObjects.FNAQuestionResponseDO> captureFNAQuestions(Scanner sc) {
+//	static List<DataObjects.FNAQuestionResponseDO> captureFNAQuestions(Scanner sc) {
+//		List<DataObjects.FNAQuestionResponseDO> fnaList = new ArrayList<>();
+//		DataObjects.FNAQuestionResponseDO q1 = new DataObjects.FNAQuestionResponseDO();
+//		q1.setQuestiondesc("Are you looking for the security during retirement ?");
+//		q1.setResponseValue(getValidString(sc, q1.getQuestiondesc() + " (YES/NO): ").toUpperCase());
+//		fnaList.add(q1);
+//
+//		DataObjects.FNAQuestionResponseDO q2 = new DataObjects.FNAQuestionResponseDO();
+//		q2.setQuestiondesc(
+//				"Are you saving for specific goal like children education or marriage or any other specific goal like buying car, world tour?");
+//		q2.setResponseValue(getValidString(sc, q2.getQuestiondesc() + " (YES/NO): ").toUpperCase());
+//		fnaList.add(q2);
+//
+//		DataObjects.FNAQuestionResponseDO q3 = new DataObjects.FNAQuestionResponseDO();
+//		q3.setQuestiondesc("Do you want to make lumpsum investment ?");
+//		q3.setResponseValue(getValidString(sc, q3.getQuestiondesc() + " (YES/NO): ").toUpperCase());
+//		fnaList.add(q3);
+//
+//		DataObjects.FNAQuestionResponseDO q4 = new DataObjects.FNAQuestionResponseDO();
+//		q4.setQuestiondesc(
+//				"Do you want to protect your family from financial impact of sudden event of death , disability , critical illness etc ?");
+//		q4.setResponseValue(getValidString(sc, q4.getQuestiondesc() + " (YES/NO): ").toUpperCase());
+//		fnaList.add(q4);
+//
+//		DataObjects.FNAQuestionResponseDO q5 = new DataObjects.FNAQuestionResponseDO();
+//		q5.setQuestiondesc(
+//				"Do you want to protect your family from financial impact of sudden event of medical issues, healthcare expenses , critical illness etc ?");
+//		q5.setResponseValue(getValidString(sc, q5.getQuestiondesc() + " (YES/NO): ").toUpperCase());
+//		fnaList.add(q5);
+//
+//		DataObjects.FNAQuestionResponseDO q6 = new DataObjects.FNAQuestionResponseDO();
+//		q6.setQuestiondesc("Whats your average monthly income?");
+//		System.out.println(q6.getQuestiondesc());
+//		System.out.println("Options: Below 5 lacs | Between 5 to 10 lacs | Between 10 to 15 lacs | Above 15 lacs");
+//		q6.setResponseValue(getValidString(sc, "Enter response: "));
+//		fnaList.add(q6);
+//
+//		DataObjects.FNAQuestionResponseDO q7 = new DataObjects.FNAQuestionResponseDO();
+//		q7.setQuestiondesc("when are you planning to retire ?");
+//		System.out.println(q7.getQuestiondesc());
+//		System.out.println("Options: 45 | 50 | 55 | 60 | 60+");
+//		q7.setResponseValue(getValidString(sc, "Enter response: "));
+//		fnaList.add(q7);
+//		return fnaList;
+//	}
+	
+	static List<DataObjects.FNAQuestionResponseDO> captureFNAQuestions(Scanner sc){
 		List<DataObjects.FNAQuestionResponseDO> fnaList = new ArrayList<>();
-		DataObjects.FNAQuestionResponseDO q1 = new DataObjects.FNAQuestionResponseDO();
-		q1.setQuestiondesc("Are you looking for the security during retirement ?");
-		q1.setResponseValue(getValidString(sc, q1.getQuestiondesc() + " (YES/NO): ").toUpperCase());
-		fnaList.add(q1);
-
-		DataObjects.FNAQuestionResponseDO q2 = new DataObjects.FNAQuestionResponseDO();
-		q2.setQuestiondesc(
-				"Are you saving for specific goal like children education or marriage or any other specific goal like buying car, world tour?");
-		q2.setResponseValue(getValidString(sc, q2.getQuestiondesc() + " (YES/NO): ").toUpperCase());
-		fnaList.add(q2);
-
-		DataObjects.FNAQuestionResponseDO q3 = new DataObjects.FNAQuestionResponseDO();
-		q3.setQuestiondesc("Do you want to make lumpsum investment ?");
-		q3.setResponseValue(getValidString(sc, q3.getQuestiondesc() + " (YES/NO): ").toUpperCase());
-		fnaList.add(q3);
-
-		DataObjects.FNAQuestionResponseDO q4 = new DataObjects.FNAQuestionResponseDO();
-		q4.setQuestiondesc(
-				"Do you want to protect your family from financial impact of sudden event of death , disability , critical illness etc ?");
-		q4.setResponseValue(getValidString(sc, q4.getQuestiondesc() + " (YES/NO): ").toUpperCase());
-		fnaList.add(q4);
-
-		DataObjects.FNAQuestionResponseDO q5 = new DataObjects.FNAQuestionResponseDO();
-		q5.setQuestiondesc(
-				"Do you want to protect your family from financial impact of sudden event of medical issues, healthcare expenses , critical illness etc ?");
-		q5.setResponseValue(getValidString(sc, q5.getQuestiondesc() + " (YES/NO): ").toUpperCase());
-		fnaList.add(q5);
-
-		DataObjects.FNAQuestionResponseDO q6 = new DataObjects.FNAQuestionResponseDO();
-		q6.setQuestiondesc("Whats your average monthly income?");
-		System.out.println(q6.getQuestiondesc());
-		System.out.println("Options: Below 5 lacs | Between 5 to 10 lacs | Between 10 to 15 lacs | Above 15 lacs");
-		q6.setResponseValue(getValidString(sc, "Enter response: "));
-		fnaList.add(q6);
-
-		DataObjects.FNAQuestionResponseDO q7 = new DataObjects.FNAQuestionResponseDO();
-		q7.setQuestiondesc("when are you planning to retire ?");
-		System.out.println(q7.getQuestiondesc());
-		System.out.println("Options: 45 | 50 | 55 | 60 | 60+");
-		q7.setResponseValue(getValidString(sc, "Enter response: "));
-		fnaList.add(q7);
+		for(String type: DataObjects.DataSource.FNAQuestions.keySet()) {
+			HashMap<String, ArrayList<String>> questionsMap = DataObjects.DataSource.FNAQuestions.get(type);
+			for(String question: questionsMap.keySet()) {
+				ArrayList<String> options = questionsMap.get(question);
+				System.out.println(question);
+				String answer = getValidString(sc, "Enter response: " + options + ": ");
+				DataObjects.FNAQuestionResponseDO fnaDO = new DataObjects.FNAQuestionResponseDO();
+				fnaDO.setQuestiondesc(question);
+				fnaDO.setResponseValue(answer);
+				fnaList.add(fnaDO);
+			}
+		}
 		return fnaList;
 	}
+	
 	static List<DataObjects.LeadAddressDO> captureUserAddresses(String leadSeq, Scanner sc) {
 		List<DataObjects.LeadAddressDO> addresses = new ArrayList<>();
 
@@ -202,7 +221,7 @@ public class MainApplication {
 			System.out.println("Enter date of birth (dd/mm/yyyy): ");
 			String dobInput = sc.nextLine();
 			try {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 				sdf.setLenient(false);
 				Date dob = sdf.parse(dobInput);
 				leadToEdit.setBirthDate(dob);
@@ -313,7 +332,7 @@ public class MainApplication {
 		DataObjects.LeadDO leadInfo = DataObjects.DataSource.partyData.get(leadSeq);
 		System.out.println("Lead ID: " + leadInfo.getLeadSeq());
 		System.out.println("Name: " + leadInfo.getTitle() + " " + leadInfo.getFirstName());
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 		System.out.println("Date of Birth: " + sdf.format(leadInfo.getBirthDate()));
 		System.out.println("Gender: " + leadInfo.getGenderCd());
 		System.out.println("Addresses");
@@ -357,7 +376,7 @@ public class MainApplication {
 			System.out.println("Lead ID: " + lead.getLeadSeq());
 			System.out.println("Name: " + lead.getTitle() + " " + lead.getFirstName());
 			if (lead.getBirthDate() != null) {
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 				System.out.println("Date of Birth: " + sdf.format(lead.getBirthDate()));
 			}
 			System.out.println("Gender: " + lead.getGenderCd());
@@ -394,7 +413,6 @@ public class MainApplication {
 	}
 
 	// custom helper methods
-
 	static String getValidString(Scanner sc, String question) {
 		String input = "";
 		while (true) {
