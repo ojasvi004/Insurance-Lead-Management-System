@@ -52,5 +52,4 @@ public class DataSource
 		personalInfo.put("when are you planning to retire ?", retireOptions);
 		FNAQuestions.put("PERSONALINFO", personalInfo);
 	}
-	
 }
