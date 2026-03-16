@@ -22,20 +22,28 @@ public class MainApplication {
             System.out.print("Please select an option: ");
             String choice = sc.nextLine();
 
-            if (choice.equals("1")) {
-                RegisterLead.registerNewLead(sc);
-            } else if (choice.equals("2")) {
-                EditLead.editLeadDetails(sc);
-            } else if (choice.equals("3")) {
-                DeleteLead.deleteLeadRecord(sc);
-            } else if (choice.equals("4")) {
-                ShowLead.showLeadDetails(sc);
-            } else if (choice.equals("5")) {
-                ShowAllLeads.showAllLeadDetails(sc);
-            } else if (choice.equals("9")) {
-                ok = true;
-            } else {
-                System.out.println("Invalid option");
+            switch (choice) {
+                case "1":
+                    RegisterLead.registerNewLead(sc);
+                    break;
+                case "2":
+                    EditLead.editLeadDetails(sc);
+                    break;
+                case "3":
+                    DeleteLead.deleteLeadRecord(sc);
+                    break;
+                case "4":
+                    ShowLead.showLeadDetails(sc);
+                    break;
+                case "5":
+                    ShowAllLeads.showAllLeadDetails(sc);
+                    break;
+                case "9":
+                    ok = true;
+                    break;
+                default:
+                    System.out.println("Invalid option");
+                    break;
             }
         }
         sc.close();

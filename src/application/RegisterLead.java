@@ -13,7 +13,7 @@ public class RegisterLead {
 
         String newLeadId = Operations.SequenceGenerator.getInstance().getNextSequence();
         newLead.setLeadSeq(newLeadId);
-        String newTitle = InputValidation.getValidRegexString(sc, "Enter Title(Mr/Ms/Mrs): ", "^(Mr|Ms|Mrs)$", "Title must be Mr, Ms or Mrs");
+        String newTitle = InputValidation.getValidRegexString(sc, "Enter title(Mr/Ms/Mrs): ", "^(Mr|Ms|Mrs)$", "Title must be Mr, Ms or Mrs");
         newLead.setTitle(newTitle);
 
         String firstName = InputValidation.getValidString(sc, "Enter first name: ");

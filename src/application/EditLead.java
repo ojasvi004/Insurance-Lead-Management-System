@@ -32,7 +32,7 @@ public class EditLead {
             leadToEdit.setTitle(newTitle);
             System.out.println("Title updated");
         } else if (choice.equals("2")) {
-        	String firstName = InputValidation.getValidString(sc, "Enter first name: ");
+        	String firstName = InputValidation.getValidRegexString(sc, "Enter first name: ", "^[a-zA-Z\\s]+$", "Name can only contain letters");
             leadToEdit.setFirstName(firstName);
             System.out.println("First name updated");
         } else if (choice.equals("3")) {
@@ -48,34 +48,33 @@ public class EditLead {
                 System.out.println("Invalid date format.");
             }
         } else if (choice.equals("4")) {
-        	String gender = InputValidation.getValidRegexString(sc, "Enter Gender (male/female/transgender): ", "^(male|female|transgender)$", "Gender must be male, female or transgender");
+        	String gender = InputValidation.getValidRegexString(sc, "Enter gender (male/female/transgender): ", "^(male|female|transgender)$", "Gender must be male, female or transgender");
             leadToEdit.setGenderCd(gender);
             System.out.println("Gender updated");
             } else if (choice.equals("5")) {
             List<DataObjects.LeadAddressDO> addressList = leadToEdit.getLeadAddressDOList();
             if (addressList.size() == 0) {
-                System.out.println("No address found.");
+                System.out.println("No address found");
             } else {
                 for (int i = 0; i < addressList.size(); i++) {
                     System.out.println((i + 1) + ": " + addressList.get(i).getAddressType() + " - "
                             + addressList.get(i).getPinCode());
                 }
-                System.out.println("Select address to edit: ");
-                int ind = Integer.parseInt(sc.nextLine()) - 1;
+                int ind = InputValidation.getValidInt(sc, "Select address to edit: ") - 1;
                 if (ind >= 0 && ind < addressList.size()) {
                     DataObjects.LeadAddressDO addrToEdit = addressList.get(ind);
-                    System.out.print("Address Type (RESIDENTIAL/OFFICE). Enter 1 for RESIDENTIAL or 2 for OFFICE: ");
-                    String inputVal = sc.nextLine();
+                    String inputVal = InputValidation.getValidRegexString(sc, "Address Type (RESIDENTIAL/OFFICE). Enter 1 for RESIDENTIAL or 2 for OFFICE: ", "^(1|2)$", "Must be exactly 1 or 2");
                     if (inputVal.equals("1")) {
                         addrToEdit.setAddressType("RESIDENTIAL");
                     } else {
                         addrToEdit.setAddressType("OFFICE");
                     }
-                    System.out.print("Enter Pin Code:");
-                    addrToEdit.setPinCode(sc.nextLine());
-                    System.out.print("Is this Primary Address? (YES/NO): ");
-                    addrToEdit.setPrimaryAddress(sc.nextLine());
-                    System.out.println("address updated");
+                    addrToEdit.setAddressDetails(InputValidation.getValidString(sc, "Enter Address details: "));
+                    addrToEdit.setStateCd(InputValidation.getValidString(sc, "Enter State code: "));
+                    addrToEdit.setCountryCd(InputValidation.getValidString(sc, "Enter Country code: "));
+                    addrToEdit.setPinCode(InputValidation.getValidRegexString(sc, "Enter Pin code: ", "^\\d{6}$", "Pin code must be 6 digits"));
+                    addrToEdit.setPrimaryAddress(InputValidation.getValidRegexString(sc, "Is this Primary address? (YES/NO): ", "^(YES|NO|yes|no)$", "Must be exactly YES or NO").toUpperCase());
+                    System.out.println("Address updated successfully");
                 } else {
                     System.out.println("Invalid selection");
                 }
@@ -93,13 +92,13 @@ public class EditLead {
             int ind = Integer.parseInt(sc.nextLine()) - 1;
             if (ind >= 0 && ind < contactList.size()) {
                 DataObjects.LeadContactDO contactToEdit = contactList.get(ind);
-                String contactType = InputValidation.getValidRegexString(sc, "Contact Type (EMAIL/PHONE): ", "^(EMAIL|PHONE|email|phone)$", "Type must be EMAIL or PHONE").toUpperCase();
+                String contactType = InputValidation.getValidRegexString(sc, "Contact type (EMAIL/PHONE): ", "^(EMAIL|PHONE|email|phone)$", "Type must be EMAIL or PHONE").toUpperCase();
                 contactToEdit.setContactType(contactType);
                 if (contactType.equals("EMAIL")) {
-                    String email = InputValidation.getValidRegexString(sc, "Enter Email Address: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", "Must be a valid email");
+                    String email = InputValidation.getValidRegexString(sc, "Enter Email address: ", "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$", "Must be a valid email");
                     contactToEdit.setContactNum(email);
                 } else {
-                    String phone = InputValidation.getValidRegexString(sc, "Enter Phone Number: ", "^\\d{10}$", "Phone number must be 10 digits");
+                    String phone = InputValidation.getValidRegexString(sc, "Enter Phone number: ", "^\\d{10}$", "Phone number must be 10 digits");
                     contactToEdit.setContactNum(phone);
                 }
                 System.out.println("Contact updated");

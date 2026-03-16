@@ -10,7 +10,7 @@ public class ShowAllLeads {
     public static void showAllLeadDetails(Scanner sc) {
         List<DataObjects.LeadDO> allLeads = new ArrayList<>(DataObjects.DataSource.partyData.values());
         if (allLeads.size() == 0) {
-            System.out.println("No leads found.");
+            System.out.println("No leads found");
             return;
         }
         for (int i = 0; i < allLeads.size(); i++) {
@@ -18,7 +18,7 @@ public class ShowAllLeads {
             System.out.println("Lead ID: " + lead.getLeadSeq());
             System.out.println("Name: " + lead.getTitle() + " " + lead.getFirstName());
             if (lead.getBirthDate() != null) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 System.out.println("Date of Birth: " + sdf.format(lead.getBirthDate()));
             }
             System.out.println("Gender: " + lead.getGenderCd());
@@ -28,7 +28,12 @@ public class ShowAllLeads {
             if (addresses.size() > 0) {
                 for (int j = 0; j < addresses.size(); j++) {
                     DataObjects.LeadAddressDO addr = addresses.get(j);
-                    System.out.println((i + 1) + ": " + addr.getAddressType() + " - " + addr.getPinCode());
+                    System.out.println((j + 1) + ": " + addr.getAddressType());
+                    System.out.println("Details: " + addr.getAddressDetails());
+                    System.out.println("State: " + addr.getStateCd());
+                    System.out.println("Country: " + addr.getCountryCd());
+                    System.out.println("Pin Code: " + addr.getPinCode());
+                    System.out.println("Primary: " + addr.getPrimaryAddress());
                 }
             } else {
                 System.out.println("No addresses found");
@@ -38,7 +43,7 @@ public class ShowAllLeads {
             if (contacts.size() > 0) {
                 for (int k = 0; k < contacts.size(); k++) {
                     DataObjects.LeadContactDO contact = contacts.get(k);
-                    System.out.println((i + 1) + ": " + contact.getContactType() + " - " + contact.getContactNum());
+                    System.out.println((k + 1) + ": " + contact.getContactType() + " - " + contact.getContactNum());
                 }
                 System.out.println("FNA Responses");
                 List<DataObjects.FNAQuestionResponseDO> fnaList = lead.getFNAQuestionResponseDOList();

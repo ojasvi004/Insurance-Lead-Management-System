@@ -1,21 +1,31 @@
 package application;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InputValidation {
 
-    public static String getValidString(Scanner sc, String question) {
-        String input = "";
-        while (true) {
-            System.out.println(question);
-            input = sc.nextLine();
-            if (!input.trim().isEmpty()) {
-                break;
-            }
-            System.out.println("Please try again");
-        }
-        return input;
-    }
+	public static String getValidString(Scanner sc, String question) {
+	    String input = "";
+	    while (true) {
+	        System.out.println(question);
+	        input = sc.nextLine().trim();
+	        if (!input.isEmpty() && isOnlyLetters(input)) {
+	            break;
+	        }
+	        System.out.println("use letters only");
+	    }
+	    return input;
+	}
+	
+	public static boolean isOnlyLetters(String str) {
+	    for (char c : str.toCharArray()) {
+	        if (!Character.isLetter(c)) {
+	            return false; 
+	        }
+	    }
+	    return true;
+	}
 
     public static int getValidInt(Scanner sc, String prompt) {
         while (true) {
@@ -49,5 +59,18 @@ public class InputValidation {
             }
         }
         return input;
+    }
+    public static String getValidOption(Scanner sc, String prompt, ArrayList<String> options) {
+        String input = "";
+        while (true) {
+            System.out.print(prompt);
+            input = sc.nextLine().trim();
+            for (String opt : options) {
+                if (opt.equalsIgnoreCase(input)) {
+                    return opt;
+                }
+            }
+            System.out.println("Invalid input. Please type exactly one of the given options: " + options);
+        }
     }
 }
