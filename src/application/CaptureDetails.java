@@ -48,17 +48,33 @@ public class CaptureDetails {
             addr.setCountryCd(InputValidation.getValidString(sc, "Enter Country code: "));
             
             addr.setPinCode(InputValidation.getValidRegexString(sc, "Enter Pin code: ", "^\\d{6}$", "pin code must be exactly 6 digits"));
-            addr.setPrimaryAddress(InputValidation.getValidRegexString(sc, "Is this Primary address? (YES/NO): ", "^(YES|NO|yes|no)$", "Must be YES or NO").toUpperCase());
+            String isPrimary = InputValidation.getValidRegexString(sc, "Is this Primary address? (YES/NO): ", "^(YES|NO|yes|no)$", "Must be YES or NO").toUpperCase();
+            if(isPrimary == "YES") {
+            	hasPrimary = true;
+            }
+            addr.setPrimaryAddress(isPrimary);
             addresses.add(addr);
-            for(DataObjects.LeadAddressDO a: addresses) {
-            	if (a.getPrimaryAddress().equals("YES")) {
-                    hasPrimary = true;
-                }
-            }
-            if (!hasPrimary && addresses.size() > 0) {
-                addresses.get(0).setPrimaryAddress("YES");
-            }
         }
+        if(hasPrimary == false && addresses.size() > 0) {
+        		System.out.println("Which of the following addresses do you want to set as primary");
+        		for(int i=0;i<addresses.size(); i++) {
+        			 DataObjects.LeadAddressDO addr = addresses.get(i);
+                     System.out.println((i + 1) + ": " + addr.getAddressType());
+                     System.out.println("Details: " + addr.getAddressDetails());
+                     System.out.println("State: " + addr.getStateCd());
+                     System.out.println("Country: " + addr.getCountryCd());
+                     System.out.println("Pin Code: " + addr.getPinCode());
+                     System.out.println("Primary: " + addr.getPrimaryAddress());
+        		}
+                String input = sc.nextLine();
+                int response = Integer.parseInt(input);
+                if(response <= addresses.size()) {
+                	DataObjects.LeadAddressDO addrPrimary = addresses.get(response-1);
+                	addrPrimary.setPrimaryAddress("YES");
+                }else {
+                	System.out.println("Enter valid number");
+                }
+        		}
         return addresses;
     }
 
