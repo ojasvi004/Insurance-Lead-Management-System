@@ -52,34 +52,61 @@ public class EditLead {
             leadToEdit.setGenderCd(gender);
             System.out.println("Gender updated");
             } else if (choice.equals("5")) {
-            List<DataObjects.LeadAddressDO> addressList = leadToEdit.getLeadAddressDOList();
-            if (addressList.size() == 0) {
-                System.out.println("No address found");
-            } else {
-                for (int i = 0; i < addressList.size(); i++) {
-                    System.out.println((i + 1) + ": " + addressList.get(i).getAddressType() + " - "
-                            + addressList.get(i).getPinCode());
-                }
-                int ind = InputValidation.getValidInt(sc, "Select address to edit: ") - 1;
-                if (ind >= 0 && ind < addressList.size()) {
-                    DataObjects.LeadAddressDO addrToEdit = addressList.get(ind);
-                    String inputVal = InputValidation.getValidRegexString(sc, "Address Type (RESIDENTIAL/OFFICE). Enter 1 for RESIDENTIAL or 2 for OFFICE: ", "^(1|2)$", "Must be exactly 1 or 2");
-                    if (inputVal.equals("1")) {
-                        addrToEdit.setAddressType("RESIDENTIAL");
-                    } else {
-                        addrToEdit.setAddressType("OFFICE");
-                    }
-                    addrToEdit.setAddressDetails(InputValidation.getValidString(sc, "Enter Address details: "));
-                    addrToEdit.setStateCd(InputValidation.getValidString(sc, "Enter State code: "));
-                    addrToEdit.setCountryCd(InputValidation.getValidString(sc, "Enter Country code: "));
-                    addrToEdit.setPinCode(InputValidation.getValidRegexString(sc, "Enter Pin code: ", "^\\d{6}$", "Pin code must be 6 digits"));
-                    addrToEdit.setPrimaryAddress(InputValidation.getValidRegexString(sc, "Is this Primary address? (YES/NO): ", "^(YES|NO|yes|no)$", "Must be exactly YES or NO").toUpperCase());
-                    System.out.println("Address updated successfully");
+                List<DataObjects.LeadAddressDO> addressList = leadToEdit.getLeadAddressDOList();
+                if (addressList.size() == 0) {
+                    System.out.println("No address found");
                 } else {
-                    System.out.println("Invalid selection");
+                    for (int i = 0; i < addressList.size(); i++) {
+                        System.out.println((i + 1) + ": " + addressList.get(i).getAddressType() + " - "
+                                + addressList.get(i).getPinCode());
+                    }
+                    int ind = InputValidation.getValidInt(sc, "Select address to edit: ") - 1;
+                    if (ind >= 0 && ind < addressList.size()) {
+                        DataObjects.LeadAddressDO addrToEdit = addressList.get(ind);
+                        String inputVal = InputValidation.getValidRegexString(sc, "Address Type (RESIDENTIAL/OFFICE). Enter 1 for RESIDENTIAL or 2 for OFFICE: ", "^(1|2)$", "Must be exactly 1 or 2");
+                        if (inputVal.equals("1")) {
+                            addrToEdit.setAddressType("RESIDENTIAL");
+                        } else {
+                            addrToEdit.setAddressType("OFFICE");
+                        }
+                        addrToEdit.setAddressDetails(InputValidation.getValidString(sc, "Enter Address details: "));
+                        addrToEdit.setStateCd(InputValidation.getValidString(sc, "Enter State code: "));
+                        addrToEdit.setCountryCd(InputValidation.getValidString(sc, "Enter Country code: "));
+                        addrToEdit.setPinCode(InputValidation.getValidRegexString(sc, "Enter Pin code: ", "^\\d{6}$", "Pin code must be 6 digits"));
+                        addrToEdit.setPrimaryAddress(InputValidation.getValidRegexString(sc, "Is this Primary address? (YES/NO): ", "^(YES|NO|yes|no)$", "Must be exactly YES or NO").toUpperCase());
+                        System.out.println("Address updated successfully");
+                        boolean hasPrimary = false;
+                        for (DataObjects.LeadAddressDO a : addressList) {
+                            if (a.getPrimaryAddress().equals("YES")) {
+                                hasPrimary = true;
+                            }
+                        }
+                        if (hasPrimary == false && addressList.size() > 0) {
+                            System.out.println("Which of the following addresses do you want to set as primary");
+                            for (int i = 0; i < addressList.size(); i++) {
+                                DataObjects.LeadAddressDO addr = addressList.get(i);
+                                System.out.println((i + 1) + ": " + addr.getAddressType());
+                                System.out.println("Details: " + addr.getAddressDetails());
+                                System.out.println("State: " + addr.getStateCd());
+                                System.out.println("Country: " + addr.getCountryCd());
+                                System.out.println("Pin Code: " + addr.getPinCode());
+                                System.out.println("Primary: " + addr.getPrimaryAddress());
+                            }
+                            String input = sc.nextLine();
+                            int response = Integer.parseInt(input);
+                            if (response > 0 && response <= addressList.size()) {
+                                DataObjects.LeadAddressDO addrPrimary = addressList.get(response - 1);
+                                addrPrimary.setPrimaryAddress("YES");
+                                System.out.println("Primary address set successfully");
+                            } else {
+                                System.out.println("Enter valid number");
+                            }
+                        }
+                    } else {
+                        System.out.println("Invalid selection");
+                    }
                 }
-            }
-        } else if (choice.equals("6")) {
+                }else if (choice.equals("6")) {
             List<DataObjects.LeadContactDO> contactList = leadToEdit.getLeadContactDOList();
             if (contactList.size() == 0) {
                 System.out.println("No contacts found");
