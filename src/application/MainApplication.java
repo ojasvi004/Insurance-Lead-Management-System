@@ -38,6 +38,9 @@ public class MainApplication {
                 case "5":
                     ShowAllLeads.showAllLeadDetails(sc);
                     break;
+                case "6":
+                    GenerateQuotation.generateNewQuotation(sc);
+                    break;
                 case "9":
                     ok = true;
                     break;
