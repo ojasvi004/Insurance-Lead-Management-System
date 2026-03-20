@@ -28,12 +28,8 @@ public class ShowLead {
         if (addresses.size() > 0) {
             for (int i = 0; i < addresses.size(); i++) {
                 DataObjects.LeadAddressDO addr = addresses.get(i);
-                System.out.println((i + 1) + ": " + addr.getAddressType());
-                System.out.println("Details: " + addr.getAddressDetails());
-                System.out.println("State: " + addr.getStateCd());
-                System.out.println("Country: " + addr.getCountryCd());
-                System.out.println("Pin Code: " + addr.getPinCode());
-                System.out.println("Primary: " + addr.getPrimaryAddress());
+                System.out.println((i + 1) + ":");
+                System.out.println(addr.toString());
             }
         } else {
             System.out.println("No addresses found");

@@ -58,4 +58,13 @@ public class LeadAddressDO {
 	public void setPrimaryAddress(String primaryAddress) {
 		this.primaryAddress = primaryAddress;
 	}
+	@Override
+    public String toString() {
+        return "Type: " + addressType + "\n" +
+               "Details: " + addressDetails + "\n" +
+               "State: " + stateCd + "\n" +
+               "Country: " + countryCd + "\n" +
+               "Pin Code: " + pinCode + "\n" +
+               "Primary: " + primaryAddress + "\n";
+    }
 }
