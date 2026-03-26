@@ -4,6 +4,8 @@ public class BasePolicyDO implements termsAndConditionINTF{
 	String leadSeq;
 	String paymentFrequency;
 	
+	
+	
 	public String disclaimerMessage() {
 		return "terms and condition example";
 	}
