@@ -41,6 +41,9 @@ public class MainApplication {
                 case "6":
                     GenerateQuotation.generateNewQuotation(sc);
                     break;
+                case "7":
+                    DownloadQuotation.download(sc);
+                    break;
                 case "9":
                     ok = true;
                     break;

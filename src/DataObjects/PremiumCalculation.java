@@ -39,7 +39,7 @@ public class PremiumCalculation {
         } else if (freq.equals("quarterly")) {
             return monthlyPremium * 3;
         } else {
-            return monthlyPremium * 1;
+            return monthlyPremium * 1;																
         }
     }
 	}

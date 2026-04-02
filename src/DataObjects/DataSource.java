@@ -9,7 +9,7 @@ import java.util.Map;
 public class DataSource 
 {
 	public static LinkedHashMap<String, List<BasePolicyDO>> QuotationGenerated=new LinkedHashMap<String, List<BasePolicyDO>>();
-
+	public static ArrayList<String> paidPolicies = new ArrayList<>();
 	public static HashMap<String, LeadDO> partyData = new HashMap<String, LeadDO>(); 
 	{
 //		partyData.put("1","Yash");
@@ -71,43 +71,43 @@ public class DataSource
         ));
         policyRiders.put("HEALTHINSURANCE", healthList);
     }
-//    static {
-//        DataObjects.LeadDO dummyLead = new DataObjects.LeadDO();
-//        dummyLead.setLeadSeq("1");
-//        dummyLead.setFirstName("Tester");
-//        dummyLead.setTitle("Mr");
-//        dummyLead.setGenderCd("Male");
-//
-//        // 1. Give him a dummy address
-//        List<DataObjects.LeadAddressDO> dummyAddresses = new ArrayList<>();
-//        DataObjects.LeadAddressDO address = new DataObjects.LeadAddressDO();
-//        address.setAddressType("RESIDENTIAL");
-//        address.setAddressDetails("123 Code Street");
-//        address.setPrimaryAddress("YES");
-//        dummyAddresses.add(address);
-//        dummyLead.setLeadAddressDOList(dummyAddresses);
-//
-//        // 2. Give him dummy FNA Answers so Option 6 works perfectly!
-//        List<DataObjects.FNAQuestionResponseDO> dummyFNA = new ArrayList<>();
-//        
-//        DataObjects.FNAQuestionResponseDO healthFNA = new DataObjects.FNAQuestionResponseDO();
-//        healthFNA.setQuestiondesc("medical issues"); // Matches your Option 6 logic
-//        healthFNA.setResponseValue("YES");
-//        dummyFNA.add(healthFNA);
-//
-//        DataObjects.FNAQuestionResponseDO termFNA = new DataObjects.FNAQuestionResponseDO();
-//        termFNA.setQuestiondesc("death"); // Matches your Option 6 logic
-//        termFNA.setResponseValue("YES");
-//        dummyFNA.add(termFNA);
-//        
-//        DataObjects.FNAQuestionResponseDO investFNA = new DataObjects.FNAQuestionResponseDO();
-//        investFNA.setQuestiondesc("retirement"); // Matches your Option 6 logic
-//        investFNA.setResponseValue("YES");
-//        dummyFNA.add(investFNA);
-//
-//        dummyLead.setFNAQuestionResponseDOList(dummyFNA);
-//
-//        // 3. Save him to the database!
-//        partyData.put("1", dummyLead);
-//    }
+    static {
+        DataObjects.LeadDO dummyLead = new DataObjects.LeadDO();
+        dummyLead.setLeadSeq("1");
+        dummyLead.setFirstName("Tester");
+        dummyLead.setTitle("Mr");
+        dummyLead.setGenderCd("Male");
+
+        // 1. Give him a dummy address
+        List<DataObjects.LeadAddressDO> dummyAddresses = new ArrayList<>();
+        DataObjects.LeadAddressDO address = new DataObjects.LeadAddressDO();
+        address.setAddressType("RESIDENTIAL");
+        address.setAddressDetails("123 Code Street");
+        address.setPrimaryAddress("YES");
+        dummyAddresses.add(address);
+        dummyLead.setLeadAddressDOList(dummyAddresses);
+
+        // 2. Give him dummy FNA Answers so Option 6 works perfectly!
+        List<DataObjects.FNAQuestionResponseDO> dummyFNA = new ArrayList<>();
+        
+        DataObjects.FNAQuestionResponseDO healthFNA = new DataObjects.FNAQuestionResponseDO();
+        healthFNA.setQuestiondesc("medical issues"); // Matches your Option 6 logic
+        healthFNA.setResponseValue("YES");
+        dummyFNA.add(healthFNA);
+
+        DataObjects.FNAQuestionResponseDO termFNA = new DataObjects.FNAQuestionResponseDO();
+        termFNA.setQuestiondesc("death"); // Matches your Option 6 logic
+        termFNA.setResponseValue("YES");
+        dummyFNA.add(termFNA);
+        
+        DataObjects.FNAQuestionResponseDO investFNA = new DataObjects.FNAQuestionResponseDO();
+        investFNA.setQuestiondesc("retirement"); // Matches your Option 6 logic
+        investFNA.setResponseValue("YES");
+        dummyFNA.add(investFNA);
+
+        dummyLead.setFNAQuestionResponseDOList(dummyFNA);
+
+        // 3. Save him to the database!
+        partyData.put("1", dummyLead);
+    }
 }
