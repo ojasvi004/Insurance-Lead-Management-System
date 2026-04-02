@@ -17,7 +17,7 @@ public class MainApplication {
             System.out.println("5: View all leads");
             System.out.println("6: Generate quotation");
             System.out.println("7: Download quotation");
-            System.out.println("8: Search quotation & buy Policy");
+            System.out.println("8: Search quotation & buy policy");
             System.out.println("9: Exit");
             System.out.print("Please select an option: ");
             String choice = sc.nextLine();
@@ -43,6 +43,9 @@ public class MainApplication {
                     break;
                 case "7":
                     DownloadQuotation.download(sc);
+                    break;
+                case "8":
+                    SearchAndBuyPolicy.processPayment(sc);
                     break;
                 case "9":
                     ok = true;

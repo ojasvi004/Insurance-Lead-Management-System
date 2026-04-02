@@ -1,0 +1,10 @@
+QUOTATIONUser details:Lead ID: 1
+Name: Mr Tester
+Gender: Male
+Policy detailsPolicy ID: 1
+Product Type: Health Insurance
+Payment Frequency: annually
+Modal Premium: Rs. 16800.0
+sum assured: 1000000.0
+Included riders: 
+-Critical Illness Rider(cover amount:200000.0)
